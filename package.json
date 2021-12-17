@@ -1,6 +1,7 @@
 {
   "name": "snake-game",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.17.2"
   }
