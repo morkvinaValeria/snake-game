@@ -2,7 +2,7 @@ class Snake {
   constructor(scene) {
     this.scene = scene;
     this.lastMoveTime = 0;
-    this.moveInterval = 100;
+    this.moveInterval = 160;
     this.tileSize = 16;
     this.direction = Phaser.Math.Vector2.DOWN;
     this.body = [];
@@ -41,16 +41,20 @@ class Snake {
     console.log(event);
     switch (event.keyCode) {
       case 37: //left
-        this.direction = Phaser.Math.Vector2.LEFT;
+        if (this.direction !== Phaser.Math.Vector2.RIGHT)
+          this.direction = Phaser.Math.Vector2.LEFT;
         break;
       case 38: //up
-        this.direction = Phaser.Math.Vector2.UP;
+        if (this.direction !== Phaser.Math.Vector2.DOWN)
+          this.direction = Phaser.Math.Vector2.UP;
         break;
       case 39: //right
-        this.direction = Phaser.Math.Vector2.RIGHT;
+        if (this.direction !== Phaser.Math.Vector2.LEFT)
+          this.direction = Phaser.Math.Vector2.RIGHT;
         break;
       case 40: //down
-        this.direction = Phaser.Math.Vector2.DOWN;
+        if (this.direction !== Phaser.Math.Vector2.UP)
+          this.direction = Phaser.Math.Vector2.DOWN;
         break;
     }
   }
