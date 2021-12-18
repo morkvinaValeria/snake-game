@@ -2,21 +2,39 @@ class Snake {
   constructor(scene) {
     this.scene = scene;
     this.lastMoveTime = 0;
-    this.moveInterval = 500;
-    this.direction = Phaser.Math.Vector2.RIGHT;
+    this.moveInterval = 100;
+    this.tileSize = 16;
+    this.direction = Phaser.Math.Vector2.DOWN;
     this.body = [];
     this.body.push(
-      this.scene.add.rectangle(0, 0, 16, 16, 0xff0000).setOrigin(0)
+      this.scene.add
+        .rectangle(
+          this.scene.game.config.width / 2,
+          this.scene.game.config.height / 2,
+          this.tileSize,
+          this.tileSize,
+          0x46b8ef
+        )
+        .setOrigin(0)
     );
-    this.body.push(
-      this.scene.add.rectangle(0, 0, 16, 16, 0xff0000).setOrigin(0)
-    );
-    this.body.push(
-      this.scene.add.rectangle(0, 0, 16, 16, 0xff0000).setOrigin(0)
-    );
+    this.apple = this.scene.add
+      .rectangle(0, 0, this.tileSize, this.tileSize, 0x1fcb64)
+      .setOrigin(0);
+    this.positionApple();
     scene.input.keyboard.on("keydown", (e) => {
       this.keydown(e);
     });
+  }
+
+  positionApple() {
+    this.apple.x =
+      Math.floor(
+        (Math.random() * this.scene.game.config.width) / this.tileSize
+      ) * this.tileSize;
+    this.apple.y =
+      Math.floor(
+        (Math.random() * this.scene.game.config.height) / this.tileSize
+      ) * this.tileSize;
   }
 
   keydown(event) {
@@ -45,12 +63,25 @@ class Snake {
   }
 
   move() {
+    let x = this.body[0].x + this.direction.x * this.tileSize;
+    let y = this.body[0].y + this.direction.y * this.tileSize;
+
+    if (this.apple.x === x && this.apple.y === y) {
+      this.body.push(
+        this.scene.add
+          .rectangle(0, 0, this.tileSize, this.tileSize, 0xcb1650)
+          .setOrigin(0)
+      );
+      this.positionApple();
+    }
+    // this.positionApple();
+
     for (let index = this.body.length - 1; index > 0; index--) {
       this.body[index].x = this.body[index - 1].x;
       this.body[index].y = this.body[index - 1].y;
     }
-    this.body[0].x += this.direction.x * 16;
-    this.body[0].y += this.direction.y * 16;
+    this.body[0].x = x;
+    this.body[0].y = y;
   }
 }
 

@@ -4,3 +4,6 @@ body {
   font-family: Arial, Verdana, sans-serif;
   text-align: center;
 }
+.phaser-game > canvas {
+  transform: scale(0.8);
+}
